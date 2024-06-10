@@ -55,4 +55,12 @@ func main() {
 	s.Plug(l, 10)
 	s.Plug(t, 15)
 	s.Plug(k, 20)
+
+	// empty interface
+	var i interface{} = "hello"
+	x, ok := i.(string)
+	fmt.Println(x, ok)
+
+	y, ok := i.(int)
+	fmt.Println(y, ok)
 }
