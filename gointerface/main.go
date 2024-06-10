@@ -56,7 +56,7 @@ func main() {
 	s.Plug(t, 15)
 	s.Plug(k, 20)
 
-	// empty interface
+	// empty interface, type assertion
 	var i interface{} = "hello"
 	x, ok := i.(string)
 	fmt.Println(x, ok)
