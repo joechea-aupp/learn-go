@@ -1,10 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func speak(arg string, ch chan string) {
 	// add variable of arg to channel ch
 	ch <- arg
+}
+
+// <-chan receiving channel only
+func receiver(input <-chan int) {
+	for i := range input {
+		fmt.Println(i)
+	}
+}
+
+func sender(output chan<- int, n int) {
+	for i := 0; i < n; i++ {
+		time.Sleep(time.Millisecond * 500)
+		// channel <- data to send to channel
+		output <- i * i
+	}
+	close(output)
 }
 
 func main() {
@@ -27,4 +46,11 @@ func main() {
 	fmt.Println("data 2:", data2, ok) // ok is false if the channel is closed
 
 	close(ch)
+
+	cha := make(chan int)
+	go sender(cha, 5)
+	go receiver(cha)
+
+	time.Sleep(time.Second * 5)
+	fmt.Println("Done")
 }
